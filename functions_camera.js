@@ -1,4 +1,13 @@
 //////////////////////////////////////////////////////////////////////////////// camera
+function screen_position(x){
+  var i=0;
+  while (x>arr_pos_screens[i+1]){
+    i++;
+  }
+  return i;
+}
+
+
 function framing(x) {
   //ZOOM
     var i=0;
@@ -15,10 +24,7 @@ function framing(x) {
                               arr_posY_cam[i][1], arr_posY_cam[i+1][1]);
 
 //CAM POSITIONNING
-    var j=0;
-    while (x>arr_pos_screens[j+1]){
-        j++;
-    }
+    var j = screen_position(x);
 //updateCam
     cam.setBounds(new_posX_cam, new_posY_cam, arr_dim_screens[j][0], arr_dim_screens[j][1]);
     cam.zoomTo(new_zoom,0);
@@ -43,10 +49,7 @@ function f(a,x,b){
 //////////////////////////////////////////////////////////////////////////////// player
 
 function appearance(x){
-    var i=0;
-    while (x>arr_pos_screens[i+1]){
-      i++;
-    }
+    var i = screen_position(x);
     player.setTexture(arr_appearance_player[i][0], 0).setSize(arr_appearance_player[i][1],arr_appearance_player[i][2]);
 }
 function physicsPlayer(x){
