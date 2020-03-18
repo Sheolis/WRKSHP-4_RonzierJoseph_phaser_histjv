@@ -1,7 +1,9 @@
 
 var cursors;
 var cam;
+var s2_cam;
 var player;
+var s2_player;
 var platforms;
 var dispo_jj;
 var game_status;

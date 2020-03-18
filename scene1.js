@@ -13,7 +13,7 @@ init(){
   arr_posY_cam = [[24,2236],[95,2236],[135,1985],[391,1985],[483,1073],[1864,1073],[2048,114],[5864,114]];//[x,y_cam];
   arr_key_zoom = [[24,22],[95,22],[135,3.6],[391,3.6],[483,0.89],[1864,0.89],[2048,0.499],[5864,0.499]];//keys zoom :[x,zoom];
   arr_appearance_player = [['p_p_1',5,5],['p_p_2',29,33],['p_p_3',148,294],['p_p_3',148,294]];// [key, height]
-  arr_speeds_player = [[70,250,2300,1],[100,725,1500,0],[500,1200,3000,0],[500,1800,3000,0]] //[x-speed, y-speed, gravity, bounce]
+  arr_speeds_player = [[100,-300,2300,1],[100,725,1500,0],[500,1200,3000,0],[800,1800,3000,0]] //[x-speed, y-speed, gravity, bounce]
 }
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> PRELOAD
@@ -52,19 +52,18 @@ create(){
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> UPDATE
 update(){
-  console.log();
+  if (player.body.center.x>5800){
+    cam.fadeOut(500);
+    this.scene.start("Scene2");
+  }
+
+
   //////////////////////////////////////////////////////////////////////////////// camera
   framing(player.body.center.x);
   appearance(player.body.center.x);
   physicsPlayer(player.body.center.x);
   //////////////////////////////////////////////////////////////////////////////// player
-/*if(cursors.space.isDown){slash_on=true;}
-if(slash_on) {
-  player.anims.play('slash',true);
-  att_spectre();
-  if(player.anims.currentFrame.index==player.anims.currentAnim.frames.length){slash_on=false;}
-}*/
-//else{
+
   if(player.body.touching.down){ dispo_jj=0;}
 
   if(cursors.left.isDown && player.body.touching.down){
@@ -86,7 +85,6 @@ if(slash_on) {
     player.setFlipX(false);
   }
 //double jump
-
   if(cursors.up.isDown && player.body.touching.down){
     player.setVelocityY(-speedY);
   }

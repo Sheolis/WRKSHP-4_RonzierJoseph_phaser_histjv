@@ -10,7 +10,7 @@ physics: {
         }
     },
 scene:
-	[Scene1]
+	[Scene1, Scene2]
 };
 
 this.game = new Phaser.Game(config);
