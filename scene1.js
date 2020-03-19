@@ -12,7 +12,7 @@ init(){
   arr_posX_cam = [[24,24],[95,24],[135,103],[391,103],[483,423],[1864,423],[2048,2024],[5864,2024]];//[x,x_cam];
   arr_posY_cam = [[24,2236],[95,2236],[135,1985],[391,1985],[483,1073],[1864,1073],[2048,114],[5864,114]];//[x,y_cam];
   arr_key_zoom = [[24,22],[95,22],[135,3.6],[391,3.6],[483,0.89],[1864,0.89],[2048,0.499],[5864,0.499]];//keys zoom :[x,zoom];
-  arr_appearance_player = [['p_p_1',5,5],['p_p_2',29,33],['p_p_3',148,294],['p_p_3',148,294]];// [key, height]
+  arr_appearance_player = [['p_1',4,4],['p_2',29,33],['p_3',148,294],['p_4',148,294]];// [key, height]
   arr_speeds_player = [[40,-300,300,1],[100,725,1500,0],[500,1200,3000,0],[800,1800,3000,0]] //[x-speed, y-speed, gravity, bounce]
 }
 
@@ -24,9 +24,10 @@ preload(){
     this.load.image('p2_wall3','assets/proto_wall_3.png');
     this.load.image('p2_cub1','assets/proto_cub_1.png');
     this.load.image('p_cam','assets/proto2_cams.png');
-    this.load.spritesheet('p_p_1','assets/proto_perso_1.png',{frameWidth: 4, frameHeight: 4});
-    this.load.spritesheet('p_p_2','assets/proto_perso_2.png',{frameWidth: 28, frameHeight: 32});
-    this.load.spritesheet('p_p_3','assets/proto_perso_3.png',{frameWidth: 142, frameHeight: 294});
+    this.load.spritesheet('p_1','assets/p_1.png',{frameWidth: 4, frameHeight: 4});
+    this.load.spritesheet('p_2','assets/p_2_spritesheet.png',{frameWidth: 28, frameHeight: 32});
+    this.load.spritesheet('p_4','assets/p_3_spritesheet.png',{frameWidth: 142, frameHeight: 294});
+    this.load.spritesheet('p_3','assets/p_4_spritesheet.png',{frameWidth: 148, frameHeight: 197});
 }
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CREATE
@@ -47,10 +48,51 @@ create(){
   cam.setBounds(24, 2236, 80, 44);
   cam.zoomTo(22,0);
   //////////////////////////////////////////////////////////////////////////////////////player
-  player = this.physics.add.sprite(28,2254,'p_p_1');
+  player = this.physics.add.sprite(28,2254,'p_1');
   player.setBounce(1);
   player.body.setGravityY(2300);
   this.physics.add.collider(player,platforms);
+
+
+  //////////////////////////////////////////////////////////////////////////////////////player animations
+
+  this.anims.create({
+    		key:'metamorph_12',
+    		frames: this.anims.generateFrameNumbers('p_2', {start: 0, end: 9}),
+    		frameRate: 8,
+    		repeat: 0
+    	});
+  this.anims.create({
+    		key:'metamorph_21',
+    		frames: this.anims.generateFrameNumbers('p_2', {start: 9, end: 0}),
+    		frameRate: -8,
+    		repeat: 0
+    	});
+  this.anims.create({
+    		key:'metamorph_23',
+    		frames: this.anims.generateFrameNumbers('p_3', {start: 0, end: 18}),
+    		frameRate: 8,
+    		repeat: 0
+    	});
+  this.anims.create({
+    		key:'metamorph_32',
+    		frames: this.anims.generateFrameNumbers('p_3', {start: 18, end: 0}),
+    		frameRate: -8,
+    		repeat: 0
+    	});
+  this.anims.create({
+        key:'metamorph_34',
+        frames: this.anims.generateFrameNumbers('p_4', {start: 0, end: 10}),
+        frameRate: 8,
+        repeat: 0
+      });
+  this.anims.create({
+        key:'metamorph_43',
+        frames: this.anims.generateFrameNumbers('p_4', {start: 10, end: 0}),
+        frameRate: -8,
+        repeat: 0
+      });
+
 }
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> UPDATE
@@ -74,7 +116,9 @@ update(){
   //////////////////////////////////////////////////////////////////////////////// player movement
   if(cursors.left.isDown && player.body.touching.down){
     player.setVelocityX(-speedX);
-    player.setFlipX(true);
+    if(screen_position(p_x)!=2){
+      player.setFlipX(true);
+    }
   }else if(cursors.right.isDown && player.body.touching.down){
     player.setVelocityX(speedX);
     player.setFlipX(false);
@@ -88,7 +132,9 @@ update(){
 
   if(cursors.left.isDown && !player.body.touching.down){
     player.setVelocityX(-speedX);
-    player.setFlipX(true);
+    if(screen_position(p_x)!=2){
+      player.setFlipX(true);
+    }
   }else if(cursors.right.isDown && !player.body.touching.down){
     player.setVelocityX(speedX);
     player.setFlipX(false);
