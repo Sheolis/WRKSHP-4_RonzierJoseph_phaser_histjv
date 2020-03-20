@@ -25,6 +25,10 @@ preload(){
     this.load.image('p2_wall3','assets/proto_wall_3.png');
     this.load.image('p2_cub1','assets/proto_cub_1.png');
     this.load.image('p_cam','assets/proto2_cams.png');
+    this.load.image('p_l','assets/proto_left.png');
+    this.load.image('p_r','assets/proto_right.png');
+    this.load.image('p_up1','assets/proto_up1.png');
+    this.load.image('p_up2','assets/proto_up2.png');
     this.load.spritesheet('p_0','assets/p_0.png',{frameWidth: 4, frameHeight: 4});
     this.load.spritesheet('p_1','assets/p_1_spritesheet.png',{frameWidth: 30, frameHeight: 32});
     this.load.spritesheet('p_2','assets/p_2_spritesheet.png',{frameWidth: 148, frameHeight: 197});
@@ -41,6 +45,11 @@ create(){
   //this.input.keyboard.on('keydown_ONE',);
   //////////////////////////////////////////////////////////////////////////////////////background
   this.add.image(2984,1209,'p_cam');
+  this.add.image(44,2254,'p_l');
+  this.add.image(58,2254,'p_r');
+  this.add.image(307,2230,'p_up1');
+  this.add.image(3838,1648,'p_up2');
+  this.add.image(4061,1421,'p_up2');
   //////////////////////////////////////////////////////////////////////////////////////platforms
   platforms = this.physics.add.staticGroup();
   platforms.create(3470,2300,'p2_platform');
