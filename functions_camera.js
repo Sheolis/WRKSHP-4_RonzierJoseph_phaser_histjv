@@ -9,6 +9,8 @@ function screen_position(x){
 
 
 function framing(x) {
+  //CAM POSITIONNING
+    var j = screen_position(x);
   //ZOOM
     var i=0;
     while (x>arr_key_zoom[i+1][0]){
@@ -23,12 +25,10 @@ function framing(x) {
     var new_posY_cam = linear(x, arr_posY_cam[i][0], arr_posY_cam[i+1][0],
                               arr_posY_cam[i][1], arr_posY_cam[i+1][1]);
 
-//CAM POSITIONNING
-    var j = screen_position(x);
+
 //updateCam
-    cam.setBounds(new_posX_cam, new_posY_cam, arr_dim_screens[j][0], arr_dim_screens[j][1]);
+    cam.setBounds(new_posX_cam, arr_posY_cam[j*2][1], arr_dim_screens[j][0], arr_dim_screens[j][1]);
     cam.zoomTo(new_zoom,0);
-    //console.log(linear(a,x,b));
 }
 
 function linear(x, x1, x2, y1, y2){
@@ -48,10 +48,30 @@ function f(a,x,b){
 }
 //////////////////////////////////////////////////////////////////////////////// player
 
-function appearance(x){
-    var i = screen_position(x);
-    player.setTexture(arr_appearance_player[i][0], 0).setSize(arr_appearance_player[i][1],arr_appearance_player[i][2]);
+function appearance(i){
+    console.log(i);
+    if (player.body.velocity["x"]>0) {
+      player.setPosition(player.body.center.x + 1, player.body.center.y); //evite le cas de rester sur le point de contrôle du changement de screen
+      player.setTexture(arr_appearance_player[i+1][0], arr_appearance_player[i+1][3]).setSize(arr_appearance_player[i+1][1],arr_appearance_player[i+1][2]);
+      player.anims.play('metamorph_' + i + (i+1));
+    }
+    else {
+      player.setPosition(player.body.center.x - 1, player.body.center.y); //evite le cas de rester sur le point de contrôle du changement de screen
+      player.setTexture(arr_appearance_player[i-1][0], arr_appearance_player[i-1][3]).setSize(arr_appearance_player[i-1][1],arr_appearance_player[i-1][2]);
+      player.anims.play('metamorph_' + i + (i-1));
+    }
 }
+
+function is_screen_changing(){
+    var i = screen_position(p_x);
+    if (i != position_05sec){
+      appearance(position_05sec);
+      position_05sec = i;
+
+    }
+
+}
+
 function physicsPlayer(x){
     var i=0;
     while (x>arr_pos_screens[i+1]){
