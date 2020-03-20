@@ -18,3 +18,6 @@ var arr_appearance_player;
 var arr_speeds_player;
 var speedX;
 var speedY;
+var p_x;
+var position_05sec;
+var timer_change_screen;
